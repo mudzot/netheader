@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2016-2017 Vinnie Falco (vinnie dot falco at gmail dot com)
+// Copyright (c) 2016-2019 Vinnie Falco (vinnie dot falco at gmail dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -45,10 +45,9 @@ namespace http {
     is iterated the fields are presented in the order of insertion, with
     fields having the same name following each other consecutively.
 
-    Meets the requirements of @b Fields
+    Meets the requirements of <em>Fields</em>
 
-    @tparam Allocator The allocator to use. This must meet the
-    requirements of @b Allocator.
+    @tparam Allocator The allocator to use.
 */
 template<class Allocator>
 class basic_fields
@@ -63,8 +62,6 @@ class basic_fields
 
     friend class fields_test; // for `header`
 
-    static std::size_t constexpr max_static_buffer = 4096;
-
     struct element;
 
     using off_t = std::uint16_t;
@@ -73,7 +70,7 @@ public:
     /// The type of allocator used.
     using allocator_type = Allocator;
 
-    /// The type of element used to represent a field 
+    /// The type of element used to represent a field
     class value_type
     {
         friend class basic_fields;
@@ -85,7 +82,7 @@ public:
         char*
         data() const;
 
-        boost::asio::const_buffer
+        net::const_buffer
         buffer() const;
 
     protected:
@@ -117,7 +114,7 @@ public:
         The case-comparison operation is defined only for low-ASCII characters.
     */
 #if BOOST_BEAST_DOXYGEN
-    using key_compare = implementation_defined;
+    using key_compare = __implementation_defined__;
 #else
     struct key_compare : beast::iless
 #endif
@@ -164,7 +161,7 @@ public:
 
     /// The algorithm used to serialize the header
 #if BOOST_BEAST_DOXYGEN
-    using writer = implementation_defined;
+    using writer = __implementation_defined__;
 #else
     class writer;
 #endif
@@ -199,7 +196,7 @@ private:
 
     using rebind_type = typename
         beast::detail::allocator_traits<Allocator>::
-            template rebind_alloc<element>;
+            template rebind_alloc<align_type>;
 
     using alloc_traits =
         beast::detail::allocator_traits<rebind_type>;
@@ -277,7 +274,7 @@ public:
 public:
     /// A constant iterator to the field sequence.
 #if BOOST_BEAST_DOXYGEN
-    using const_iterator = implementation_defined;
+    using const_iterator = __implementation_defined__;
 #else
     using const_iterator = typename list_t::const_iterator;
 #endif
@@ -768,6 +765,6 @@ using fields = basic_fields<std::allocator<char>>;
 } // beast
 } // boost
 
-#include <boost/beast/http/impl/fields.ipp>
+#include <boost/beast/http/impl/fields.hpp>
 
 #endif
