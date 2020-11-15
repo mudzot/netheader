@@ -10,6 +10,6 @@ INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/boost>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/boost/asio/ts>
 )
-target_compile_definitions(netheader INTERFACE BOOST_ASIO_DISABLE_BOOST_REGEX=1)
+target_compile_definitions(netheader INTERFACE BOOST_ASIO_DISABLE_BOOST_REGEX=1 BOOST_DATE_TIME_NO_LIB=1)
 target_compile_features(netheader INTERFACE cxx_std_14)
 
