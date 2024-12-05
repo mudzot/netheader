@@ -14,6 +14,7 @@
 //  See http://www.boost.org/libs/smart_ptr/ for documentation.
 //
 
+#include <boost/smart_ptr/detail/requires_cxx11.hpp>
 #include <boost/smart_ptr/detail/shared_count.hpp>
 #include <boost/smart_ptr/detail/sp_convertible.hpp>
 #include <boost/smart_ptr/detail/sp_nullptr_t.hpp>
@@ -893,17 +894,6 @@ template<class T, class U> inline bool operator!=(shared_ptr<T> const & a, share
 {
     return a.get() != b.get();
 }
-
-#if __GNUC__ == 2 && __GNUC_MINOR__ <= 96
-
-// Resolve the ambiguity between our op!= and the one in rel_ops
-
-template<class T> inline bool operator!=(shared_ptr<T> const & a, shared_ptr<T> const & b) BOOST_SP_NOEXCEPT
-{
-    return a.get() != b.get();
-}
-
-#endif
 
 #if !defined( BOOST_NO_CXX11_NULLPTR )
 

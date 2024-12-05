@@ -27,8 +27,11 @@ public:
         return "beast.http";
     }
 
-    std::string
-    message(int ev) const override
+    http_error_category() : error_category(0x964627da815bf210u)  {}
+
+    BOOST_BEAST_DECL
+    char const*
+    message(int ev, char*, std::size_t) const noexcept override
     {
         switch(static_cast<error>(ev))
         {
@@ -62,6 +65,12 @@ public:
         default:
             return "beast.http error";
         }
+    }
+
+    std::string
+    message(int ev) const override
+    {
+        return message(ev, nullptr, 0);
     }
 
     error_condition
